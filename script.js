@@ -375,6 +375,12 @@ function trackInfo(track, category=null) {
   showView(infoView);
   document.querySelector(".track-name-info").textContent = track.name;
   document.querySelector(".track-artist-info").textContent = trackToArtist(track, category);
+  if (track.coverImg) {
+    document.querySelector(".track-cover").style.backgroundImage = `url(${track.coverImg.url})`;
+    document.querySelector(".track-cover").classList.add("has-img");
+  } else {
+    document.querySelector(".track-cover").classList.remove("has-img");
+  }
   const playBtn = document.querySelector(".track-info-play");
   if (infoPlayListener) {
     playBtn.removeEventListener("click", infoPlayListener);

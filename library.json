@@ -52,6 +52,6 @@
         { "name": "Waluigi Pinball", "id": "10", "numId": 10, "file": "m4a", "cat": [4], "mainArtist": ["Mario Kart DS"] },
         { "name": "IMTTJ", "file": "", "notReady": true, "cat": ["unsupported"] },
         { "name": "I'm always mean to the jews", "file": "", "notReady": true, "cat": ["unsupported"] },
-        { "name": "BITE ME", "id": "0", "numId": 0, "file": "mp3", "cat": [5], "featArtist": ["Zephyrianna"] }
+        { "name": "BITE ME", "id": "0", "numId": 0, "file": "mp3", "cat": [5], "featArtist": ["Zephyrianna"], "coverImg": {"url": "https://i3.ytimg.com/vi/lNoUP579nQ8/maxresdefault.jpg"} }
     ]
 }

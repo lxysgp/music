@@ -341,6 +341,14 @@ body {
   cursor: pointer;
 }
 
+.play-visualiser:not(:has(~ audio[src]):not(:has(~ audio[src=""]))) > .play-pause-button:not(.loading-btn) {
+  background-color: #999999;
+  background-image: none;
+  mask-image: url(./assets/play.png);
+  mask-size: cover;
+  mask-position: center;
+}
+
 .play-pause-button.display-pause {
   background-image: url(./assets/pause.png);
 }
@@ -441,12 +449,17 @@ body {
 }
 
 .track-cover {
-  width: min(100%, 180px);
+  width: min(100%, 210px);
   aspect-ratio: 1 / 1;
   margin: 10px auto;
   border-radius: 10px;
 
-  /* TEMPORARY */
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.track-cover:not(.has-img) {
   display: none;
 }
 
