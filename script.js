@@ -11,16 +11,45 @@ const playTime = document.querySelector("#player-time");
 const playDur = document.querySelector("#player-duration");
 const sidebarCtrl = document.querySelector("#mobile-sidebar-controller");
 
+const addToPlBtn = document.querySelector(".track-info-pl-add");
+const plMenu = document.querySelector(".track-info-pl-menu");
+
+const playlistGrid = document.querySelector("#playlists-main .track-grid");
+const playlistInfoGrid = document.querySelector("#pl-info .track-grid");
+
+const LS_PLAYLIST_ID = "playlists";
+const LS_PLAYLIST_INIT_ID = "myplaylist-init-dev"; // Remove -dev before releasing
+
+let prevScreen = null;
+
+let playlistData = [];
+
+let initPlaylistData = JSON.parse(localStorage.getItem(LS_PLAYLIST_INIT_ID)) || [];
+function updateInitPlaylist(track, remove=false) {
+  if (remove) {
+    if (initPlaylistData.indexOf(track.id) !== -1) {
+      initPlaylistData.splice(initPlaylistData.indexOf(track.id), 1);
+    }
+  } else {
+    if (!initPlaylistData.includes(track.id)) {
+      initPlaylistData.push(track.id);
+    }
+  }
+  localStorage.setItem(LS_PLAYLIST_INIT_ID, JSON.stringify(initPlaylistData));
+}
+
 /* Main Divs */
 const infoView = document.querySelector("#info-main");
 const trackView = document.querySelector("#track-main");
 const compView = document.querySelector("#comp-main");
-const views = [infoView, trackView, compView];
+const plView = document.querySelector("#playlists-main");
+const plInfoView = document.querySelector("#pl-info");
+const views = [infoView, trackView, compView, plView, plInfoView];
 const showView = (view) => {
   for (v of views) {
-    v.classList.remove("active");
+    v?.classList.remove("active");
   }
-  view.classList.add("active");
+  view?.classList.add("active");
 };
 
 const trackToArtist = (track, category=null) => {
@@ -37,6 +66,8 @@ let objUrl = ""; // ObjectURL of the Blob audio
 let trackIsLoading = false; // prevent double-loads
 
 let infoPlayListener = null; // Info-screen Play Button
+
+let infoPlAddInitBtnListener = null; // Infoscreen Add to Playlist [init] button
 
 /* Play Track Func */
 const playTrack = (track) => {
@@ -116,6 +147,112 @@ const playTrack = (track) => {
         playAudio();
       }
     });
+}
+
+/* Load Playlists Func */
+const loadPlaylists = () => {
+  playlistGrid.innerHTML = "";
+  for (let pl of playlistData) {
+    const plEntry = document.createElement("div");
+    plEntry.classList.add("track");
+    const plTitle = document.createElement("div");
+    plTitle.classList.add("track-title");
+    plTitle.textContent = pl.title || " ";
+    plEntry.append(plTitle);
+    playlistGrid.append(plEntry);
+  }
+}
+const newPlaylist = (plTitle) => {
+  const plObj = {
+    title: plTitle,
+    tracks: []
+  };
+  const plData = JSON.parse(localStorage.getItem(LS_PLAYLIST_ID)) || [];
+  console.log(plData);
+  plData.unshift(plObj);
+  localStorage.setItem(LS_PLAYLIST_ID, JSON.stringify(plData));
+  playlistData = plData;
+  loadPlaylists(plData);
+}
+
+function updatePlAddMenu(track) {
+  playlistData = JSON.parse(localStorage.getItem(LS_PLAYLIST_ID)) || [];
+  if (!track) {
+    track = { id: Symbol() }; // Ensure it will not match
+  }  
+  plMenu.innerHTML = "";
+  for (let playlist of playlistData) {
+    const option = document.createElement("div");
+    option.classList.add("pl-menu-option");
+    const optText = document.createElement("div");
+    optText.classList.add("pl-menu-opt-name");
+    optText.textContent = playlist.title;
+    const optTick = document.createElement("div");
+    optTick.classList.add("pl-menu-opt-tick");
+    if (playlist.tracks.includes(track.id)) {
+      optTick.classList.add("selected");
+    }
+    option.append(optText, optTick);
+    plMenu.append(option);
+
+    option.addEventListener("click", () => {
+      let thisPlaylist = playlistData.find(x=>x.title===playlist.title);
+      if (thisPlaylist.tracks.includes(track.id)) {
+        // add a tick (TODO)
+      }
+    })
+  }
+}
+
+function initPlAddBtnSwap(track) {
+  document.querySelector(".track-info-pl-add-text").textContent = initPlaylistData.includes(track.id) ? "Remove from Playlist" : "Add to Playlist";
+  document.querySelector(".track-info-pl-add-btn").classList.toggle("remove", initPlaylistData.includes(track.id));
+}
+
+/* Gen Tracks Func */
+const generateTracks = (trackGrid, track, category, removeFunc) => {
+  const card = document.createElement("div");
+  card.classList.add("track");
+
+  const title = document.createElement("div");
+  title.classList.add("track-title");
+  title.innerHTML = "&nbsp;";
+  title.append(track.name); // prevent XSS
+
+  const artist = document.createElement("div");
+  artist.classList.add("track-artist");
+  artist.innerHTML = "&nbsp";
+  artist.append(trackToArtist(track, category));
+
+  const menuBtn = document.createElement("div");
+  menuBtn.textContent = "⋮";
+  menuBtn.textContent = "i";
+  menuBtn.classList.add("track-menu-btn");
+
+  menuBtn.addEventListener("click", () => {
+    trackInfo(track, category);
+  });
+
+  card.append(title, artist, menuBtn);
+
+  const noClickBtns = [menuBtn];
+
+  if (removeFunc) {
+    const remBtn = document.createElement("div");
+    remBtn.textContent = "X";
+    remBtn.classList.add("pl-remove-track-btn");
+    remBtn.addEventListener("click", (ev) => { removeFunc(ev); });
+    card.append(remBtn);
+    noClickBtns.push(remBtn);
+  }
+
+  // card.append(menuBtn);
+
+  card.addEventListener("click", (ev) => {
+    if (!noClickBtns.includes(ev.target)) playTrack(track);
+  });
+
+  trackGrid.append(card);
 }
 
 const secToFull = function(secs) {
@@ -273,7 +410,7 @@ function loadFolder(folderID) {
       menu.style.top = rect.bottom + "px";
     }); */
 
-    menuBtn.addEventListener("click", () => {trackInfo(track, category)});
+    menuBtn.addEventListener("click", () => {prevScreen = trackView; trackInfo(track, category);});
 
     card.append(title, artist, menuBtn)
 
@@ -390,6 +527,22 @@ function trackInfo(track, category=null) {
     playTrack(track);
   }
   playBtn.addEventListener("click", infoPlayListener);
+
+  updatePlAddMenu(track);
+  initPlAddBtnSwap(track);
+
+  if (infoPlAddInitBtnListener) {
+    addToPlBtn.removeEventListener("click", infoPlAddInitBtnListener);
+  }
+  infoPlAddInitBtnListener = () => {
+    if (initPlaylistData.includes(track.id)) {
+      updateInitPlaylist(track, true);
+    } else {
+      updateInitPlaylist(track, false);
+    }
+    initPlAddBtnSwap(track);
+  };
+  addToPlBtn.addEventListener("click", infoPlAddInitBtnListener);
 }
 
 /* document.addEventListener("click", () => {
@@ -430,9 +583,34 @@ setInterval(function() {
 }, 500);
 
 document.querySelector("#info-main .go-back-button").addEventListener("click", () => {
-  showView(trackView);
+  showView(prevScreen || trackView);
+  initShowPlaylist();
 })
 
 document.querySelector("#track-main .go-back-button").addEventListener("click", () => {
   showView(compView);
 })
+
+/* Playlists */
+playlistData = JSON.parse(localStorage.getItem(LS_PLAYLIST_ID));
+if (!playlistData) {
+  playlistData = [];
+  localStorage.setItem(LS_PLAYLIST_ID, JSON.stringify(playlistData));
+}
+loadPlaylists(playlistData);
+
+document.querySelector("#new-pl-btn").addEventListener("click", () => {
+  newPlaylist(`Playlist ${playlistData.length + 1}`);
+});
+
+function initShowPlaylist() {
+  playlistInfoGrid.innerHTML = "";
+  for (let trk of initPlaylistData) {
+    jsonTrk = jsonLibrary.tracks.find(x=>x.id===trk);
+    generateTracks(playlistInfoGrid, jsonTrk, null, ()=>{
+      updateInitPlaylist(jsonTrk,true);
+      initShowPlaylist();
+    });
+  }
+  prevScreen = plInfoView;
+}

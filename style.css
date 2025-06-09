@@ -149,6 +149,10 @@ body {
   margin-left: 10px;
 }
 
+.pl-new-holder {
+  margin: 10px auto;
+}
+
 .tg-holder {
   display: flex;
   flex-direction: column;
@@ -167,7 +171,7 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
 }
 
-:is(.track, .comp-tile) {
+.track, .comp-tile, .pl-new-btn {
   cursor: pointer;
   transition: 0.3s;
   text-align: center;
@@ -175,16 +179,27 @@ body {
   overflow: clip;
 }
 
-.track {
+.track, .pl-new-btn {
   border-radius: 10px;
   background: #1e1e1e;
-  box-shadow: 0 0 10px var(--accent-color) inset;
   padding: 15px;
+}
+
+.track {
+  box-shadow: 0 0 10px var(--accent-color) inset;
+}
+
+.pl-new-btn {
+  box-shadow: 0 0 10px var(--highlight-color) inset;
 }
 
 .track:hover {
   background: var(--accent-color);
   color: #000;
+}
+
+.pl-new-btn:hover {
+  background: var(--highlight-color);
 }
 
 /*Comp Tiles */
@@ -250,7 +265,7 @@ body {
   margin-top: 0.2em;
 }
 
-.track-menu-btn {
+.track-menu-btn, .pl-remove-track-btn {
   float: right;
   cursor: pointer;
   font-size: 23px;
@@ -260,22 +275,39 @@ body {
   border: 1px solid var(--accent-color);
 
   font-family: 'Courier New', Courier, monospace;
+  margin-left: 5px;
 }
 
+.pl-remove-track-btn {
+  font-family: Helvetica;
+}
+
+/* .pl-remove-track-btn {
+  background-color: #FFFFFF;
+  mask-image: url(./assets/delete.png);
+  mask-size: cover;
+  mask-position: center;
+} */
+
 /* When menu button is hovered */
-.track > :is(:nth-child(3), .track-menu-btn):hover {
+.track > :is(.track-menu-btn, .pl-remove-track-btn):hover {
   background: var(--accent-color);
   color: #000000;
 }
 
-.track:hover:has(> :is(:nth-child(3), .track-menu-btn):hover) {
+/* .track > .pl-remove-track-btn:hover {
+  background: #000000;
+  color: #000000;
+} */
+
+.track:hover:has(> :is(.track-menu-btn, .pl-remove-track-btn):hover) {
   background: initial;
   color: #FFFFFF;
 }
 
 /* When track is hovered, but menu button is not */
-.track:hover > :is(:nth-child(3), .track-menu-btn):not(:hover) {
-  border-color: #000000 !important;
+.track:hover > :is(.pl-remove-track-btn, .track-menu-btn):not(:hover) {
+  border: 1px solid #000000 !important;
 }
 
 .player-bar {
@@ -460,7 +492,7 @@ body {
 }
 
 /* Track Info Screen */
-.track-info-content {
+.track-info-content, .pl-info-screen {
   width: 100%;
 }
 
@@ -479,25 +511,26 @@ body {
   display: none;
 }
 
-.track-name-info, .track-artist-info {
+.track-name-info, .track-artist-info, .pl-name-info {
   text-align: center;
 }
 
-.track-name-info {
+.track-name-info, .pl-name-info {
   font-size: 1.5em;
   margin-bottom: 10px;
 }
 
-.track-info-play-holder {
+.track-info-play-holder, .track-info-pl-add-holder, .pl-info-play-holder, .pl-info-pl-del-holder {
   width: 100%;
   display: flex;
+  flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
   padding: 10px;
+  position: relative;
 }
 
-.track-info-play {
-  font-size: 1.2em;
+.track-info-play, .track-info-pl-add, .pl-info-play, .pl-info-pl-del {
   border-radius: 10px;
   background-color: var(--highlight-color);
   margin-left: auto;
@@ -508,19 +541,86 @@ body {
   cursor: pointer;
 }
 
-.track-info-play .track-info-play-btn {
-  height: 25px;
-  width: 25px;
-  mask-image: url(./assets/play.png);
+.track-info-pl-add {
+  margin-bottom: 15px;
+}
+
+.track-info-play, .pl-info-play {
+  font-size: 1.2em;
+}
+
+.track-info-play-btn, .track-info-pl-add-btn, .pl-info-play-btn, .pl-info-pl-del-btn {
+  height: 1lh;
+  aspect-ratio: 1 / 1;
   background-color: #FFFFFF;
   mask-position: center;
   mask-size: cover;
   display: inline-block;
 }
 
-.track-info-play .track-info-play-text {
+.track-info-play-btn, .pl-info-play-btn {
+  mask-image: url(./assets/play.png);  
+}
+
+.track-info-pl-add-btn {
+  mask-image: url(./assets/pl-add.png);  
+}
+
+.track-info-pl-add-btn.remove {
+  mask-image: url(./assets/pl-remove.png);  
+}
+
+.pl-info-pl-del-btn {
+  mask-image: url(./assets/delete.png);  
+}
+
+.track-info-play-text, .track-info-pl-add-text, .pl-info-play-text, .pl-info-pl-del-text {
   display: inline-block;
   vertical-align: middle;
+}
+
+.track-info-pl-menu {
+  background: #FFFFFF;
+  color: #000000;
+  width: 200px;
+  text-align: left;
+  max-height: calc(4 * (1lh + 20px));
+  overflow-y: auto;
+}
+
+.pl-menu-option {
+  padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.pl-menu-option:not(:first-child) {
+  border-top: 1px solid black;
+}
+
+.pl-menu-option:not([disabled]) {
+  cursor: pointer;
+}
+
+.pl-menu-opt-name {
+  width: 100%;
+  text-align: left;
+}
+
+.pl-menu-opt-tick {
+  width: 1lh;
+  height: 1lh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pl-menu-opt-tick.ticked {
+  background: #000000;
+  mask-image: url(./assets/tick.png);
+  mask-position: center;
+  mask-size: cover;
 }
 
 select, option {

@@ -41,7 +41,7 @@
         }
     },
     "tracks": [
-        { "name": "Baseplate", "id": "1", "numId": 1, "file": "m4a", "cat": [1], "mainArtist": ["Aden Mayo"] },
+        { "name": "Baseplate", "id": "1", "numId": 1, "file": "m4a", "cat": [1], "mainArtist": ["Aden Mayo"], "_example_coverImg": { "url": "https://someurlhere" } },
         { "name": "The Great Strategy", "id": "2", "numId": 2, "file": "m4a", "cat": [1], "mainArtist": ["badliz"] },
         { "name": "Study Lofi", "id": "3", "numId": 3, "file": "m4a", "cat": [2] },
         { "name": "Winterbliss", "id": "4", "numId": 4, "file": "m4a", "cat": [2], "mainArtist": ["cycerin"] },

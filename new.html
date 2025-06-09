@@ -15,11 +15,11 @@
 
   <div class="sidebar mobile-visible">
     <h2>NUSHMusic <span style="color:var(--highlight-color);">Beta</span></h2>
-    <div class="folder selected">Compilations</div>    
-    <!--<div class="folder" disabled>Playlists - Coming Soon!</div>-->
+    <div class="folder selected" onclick="showView(compView);document.querySelector('.folder.selected').classList.remove('selected');this.classList.add('selected');">Compilations</div>    
+    <div class="folder" onclick="showView(plInfoView);document.querySelector('.folder.selected').classList.remove('selected');this.classList.add('selected');initShowPlaylist();">My List</div>
     
     <div class="sidebar-links">
-      <a href="https://google.com" target="_blank">Google</a>
+      NUSHMusic Player V3.0 by LXYSGP &amp; 11gohjy
     </div>
   </div>
 
@@ -70,6 +70,7 @@
       <div class="track-name-info">&nbsp;</div>
       <div class="track-artist-info">&nbsp;</div>
 
+      <!-- Big Blue Play Button! -->
       <div class="track-info-play-holder">
         <div class="track-info-play">
           <div class="track-info-play-btn">&nbsp;</div> 
@@ -77,6 +78,76 @@
         </div>
       </div>
 
+      <!-- Add to Playlist button & interface -->
+      <div class="track-info-pl-add-holder">
+        <div class="track-info-pl-add">
+          <div class="track-info-pl-add-btn">&nbsp;</div> 
+          <div class="track-info-pl-add-text">Add to Playlist</div>
+        </div>
+        <div class="track-info-pl-menu" style="display: none;">
+          <div class="pl-menu-option">
+            <span class="pl-menu-opt-name">My Playlist 1</span>
+            <span class="pl-menu-opt-tick ticked">&nbsp;</span>
+          </div>
+          <div class="pl-menu-option">
+            <span class="pl-menu-opt-name">My Playlist 2</span>
+            <span class="pl-menu-opt-tick">&nbsp;</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Playlists Page -->
+  <div class="main" id="playlists-main">
+    <header class="top-bar">
+      <div class="mobile-sidebar-controller">&nbsp;</div>
+      <h1 id="playlist-grid-header">My Playlists</h1>
+    </header>
+    <div class="pl-new-holder" style="display:none;">
+      <div class="pl-new-btn" id="new-pl-btn">+ New Playlist</div>
+    </div>
+    <div class="tg-holder">
+      <div class="track-grid">
+        <div class="track"><div class="track-title">&nbsp;My Playlist 1</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Playlist Info Page -->
+   <div class="main" id="pl-info">
+    <header class="top-bar">
+      <div class="mobile-sidebar-controller">&nbsp;</div>
+      <h1 id="pl-info-h1">List Info</h1>
+    </header>
+
+    <div class="go-back-bar" style="display:none;">
+      <div class="go-back-button">← Back</div>
+    </div>
+
+    <div class="pl-info-content">
+      <div class="pl-name-info">My List</div>
+
+      <!-- Big Blue Play Button! -->
+      <div class="pl-info-play-holder" style="display:none;">
+        <div class="pl-info-play">
+          <div class="pl-info-play-btn">&nbsp;</div> 
+          <div class="pl-info-play-text">Play</div>
+        </div>
+      </div>
+
+      <!-- Delete Playlist button -->
+      <div class="pl-info-pl-del-holder" style="display:none;">
+        <div class="pl-info-pl-del">
+          <div class="pl-info-pl-del-btn">&nbsp;</div> 
+          <div class="pl-info-pl-del-text">Delete Playlist</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tg-holder">
+      <div class="track-grid"></div>
     </div>
   </div>
 
