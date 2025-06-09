@@ -168,7 +168,7 @@ fetch("./library.json")
     // Add stuff to sidebar
     console.log(jsonLibrary);
     for (let [catId, catDetail] of Object.entries(jsonLibrary.categories)) {
-      if (!catDetail.defaultHidden) {
+      if (!catDetail.defaultHidden || ((new URL(location.href).searchParams.get("forceshow") !== null) && !catDetail.forcedHidden)) {
         /* Create tracks for comp grid */
         let sidebarItem = document.createElement("div");
         sidebarItem.classList.add("comp-tile");
@@ -183,16 +183,16 @@ fetch("./library.json")
         let logoBox = document.createElement("div");
         logoBox.classList.add("cover-image");
         console.log(catDetail.logo);
-        if (catDetail.logo.char) {
-          let logoChar = document.createElement("div");
-          logoChar.classList.add("cover-char");
-          logoChar.append(catDetail.logo.char);
-          logoBox.append(logoChar);
-        } else if (catDetail.logo.url) {
+        if (catDetail.logo?.url) {
           let logoImg = document.createElement("div");
           logoImg.classList.add("cover-img-pic");
           logoImg.style.backgroundImage = `url(${catDetail.logo.url})`;
           logoBox.append(logoImg);
+        } else if (catDetail.logo?.char) {
+          let logoChar = document.createElement("div");
+          logoChar.classList.add("cover-char");
+          logoChar.append(catDetail.logo?.char ?? "🎶");
+          logoBox.append(logoChar);
         } else {
           logoBox.innerHTML = "&nbsp;";
         }

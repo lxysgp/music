@@ -7,28 +7,6 @@
   <link rel="preload" as="image" href="./assets/menu-open-enlarged.png">
   <link rel="stylesheet" href="legacy.css">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- Announcement banner styling --> 
-  <style>
-    .announcement-bar.enabled ~ :is(.sidebar, .main) {
-      margin-top: calc(1lh + 20px);
-      height: calc(100% - 1lh - 20px);
-    }
-
-    .announcement-bar {
-      padding: 10px;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background-color: #3377FF;
-      text-align: center;
-    }
-
-    a { color: white; text-decoration-line: underline; font-weight: bold; }
-    .announcement-bar:not(.enabled) {
-      display: none;
-    }
-  </style>
 </head>
 <body>
   <div class="announcement-bar enabled">

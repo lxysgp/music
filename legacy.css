@@ -372,3 +372,26 @@ body {
     text-align: center;
   }
 }
+
+.announcement-bar.enabled ~ :is(.sidebar, .main) {
+  margin-top: calc(1lh + 20px);
+  height: calc(100% - 1lh - 20px);
+}
+
+.announcement-bar {
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #3377FF;
+  text-align: center;
+  white-space: nowrap;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+a { color: white; text-decoration-line: underline; font-weight: bold; }
+
+.announcement-bar:not(.enabled) {
+  display: none;
+}

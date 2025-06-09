@@ -48,7 +48,6 @@ body {
   padding: 10px;
   border-radius: 5px;
   transition: 0.2s;
-  height: calc(1lh + 20px);
   text-overflow: ellipsis;
   width: 100%;
   overflow-x: clip;
@@ -58,9 +57,19 @@ body {
   justify-content: flex-start;
 }
 
-.folder:hover {
+.folder:not(:is([disabled], .selected)):hover {
   background-color: #1db954;
   color: #000;
+}
+
+.folder.selected {
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+.folder[disabled] {
+  color: grey;
+  cursor: default;
 }
 
 .sidebar-logo {
@@ -214,6 +223,10 @@ body {
   width: 100%;
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: inherit;
+  position: relative;
+  z-index: -1;
 }
 
 .comp-tile > .track-title {
@@ -545,9 +558,17 @@ select, option {
   width: 100%;
   background-color: #3377FF;
   text-align: center;
+  white-space: nowrap;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.announcement-bar.enabled ~ #mobile-sidebar-controller {
+    top: calc(1lh + 20px + 20px);
 }
 
 a { color: white; text-decoration-line: underline; font-weight: bold; }
+
 .announcement-bar:not(.enabled) {
   display: none;
 }

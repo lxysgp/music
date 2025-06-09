@@ -36,69 +36,6 @@ const pauseAudio = function() {
 
 let myPlaylist = [];
 
-/* const library = {
-  "categories": {
-    "1": {
-      "name": "Item Asylum",
-      "defaultHidden": false
-    },
-    "2": {
-      "name": "Lofi",
-      "defaultHidden": false
-    },
-    "3": {
-      "name": "Favorites",
-      "defaultHidden": false
-    },
-    "4": {
-      "name": "Kirby/Remix",
-      "defaultHidden": false
-    },
-    "5": {
-      "name": "Murder Drones",
-      "defaultHidden": true,
-      "mainArtist": ["AJ DiSpirito"]
-    },
-    "6": {
-      "name": "TADC",
-      "defaultHidden": true,
-      "mainArtist": ["Gooseworx", "Evan Alderete"]
-    },
-    "unsupported": {
-      "name": "Currently Unavailable",
-      "defaultHidden": true,
-      "forcedHidden": true
-    }
-  },
-  "library": {
-    "Item Asylum": [
-      { name: "Baseplate by Aden Mayo", id: "1", numId: 1, file: "mp4", cat: [1] },
-      { name: "The Great Strategy", id: "2", numId: 2, file: "mp4", cat: [1] },
-    ],
-    "Lofi": [
-      { name: "Study Lofi", id: "3", numId: 3, file: "mp4", cat: [2] },
-      { name: "Cycerin - Winterbliss", id: "4", numId: 4, file: "mp4", cat: [2] },
-      /*{ name: "Soothing Piano", id: "5", numId: 5, file: "part", cat: [2] }* /
-    ],
-    "Favorites": [
-      { name: "Dance of the Violins", id: "6", numId: 6, file: "mp4", cat: [3] },
-      { name: "Paper Rings", id: "7", numId: 7, file: "mp3", cat: [3] },
-      { name: "Fjord of Winds", id: "8", numId: 8, file: "mp4", cat: [3] },
-      { name: "Chess Type Beat", file: "mp4", cat: [3] }
-    ],
-    "Kirby/Remix": [
-      { name: "Waluigi Pinball", id: "10", numId: 10, file: "mp4", cat: [4] }
-    ],
-    "Unavailable": [
-      { name: "IMTTJ", file: "", notReady: true, cat: ["unsupported"] },
-      { name: "I'm always mean to the jews", file: "", notReady: true, cat: ["unsupported"] }
-    ],
-    "Hidden": [
-      { name: "BITE ME", id: "0", numId: 0, file: "music/3_BM.mpeg", cat: [5] } /* do not remove this entry * /
-    ]
-  }
-}; */
-
 let jsonLibrary = null;
 let fetchConcluded = false;
 let fetchError = null;
@@ -127,7 +64,7 @@ fetch("./library.json")
     // Add stuff to sidebar
     console.log(jsonLibrary);
     for (let [catId, catDetail] of Object.entries(jsonLibrary.categories)) {
-      if (!catDetail.defaultHidden) {
+      if (!catDetail.defaultHidden || ((new URL(location.href).searchParams.get("forceshow") !== null) && !catDetail.forcedHidden)) {
         let sidebarItem = document.createElement("div");
         sidebarItem.classList.add("folder");
         let sidebarItemLabel = document.createElement("span");
@@ -317,9 +254,8 @@ function loadFolder(folderID) {
     card.appendChild(menu);
     menu.classList.add("menu");
     trackGrid.appendChild(card);
-
-    sidebar.classList.remove("mobile-visible");
   });
+  sidebar.classList.remove("mobile-visible");
 }
 
 document.addEventListener("click", () => {

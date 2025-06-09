@@ -20,16 +20,17 @@
             "defaultHidden": false,
             "logo": { "char": "🍰" }
         },
-        "5": {
-            "name": "Murder Drones",
-            "defaultHidden": false,
-            "mainArtist": ["AJ DiSpirito"],
-            "logo": { "url": "https://static.wikia.nocookie.net/5a4c6120-3595-4496-8cd2-fcb40e8c31e3/" }
-        },
-        "6": {
-            "name": "TADC",
+        "Development-Only--MD": {
+            "name": "MD",
             "defaultHidden": true,
-            "mainArtist": ["Gooseworx", "Evan Alderete"],
+            "mainArtist": ["AJ [Redacted]"],
+            "logo": { "url": "" }
+        },
+        "Development-Only--DC": {
+            "name": "DC",
+            "defaultHidden": true,
+            "forcedHidden": true,
+            "mainArtist": ["G[Redacted]", "E[Redacted] A[Redacted]"],
             "logo": { "char": "" }
         },
         "unsupported": {
@@ -49,9 +50,6 @@
         { "name": "Paper Rings", "id": "7", "numId": 7, "file": "m4a", "cat": [3], "mainArtist": ["Taylor Swift"]},
         { "name": "Winds Of Fjords", "id": "8", "numId": 8, "file": "m4a", "cat": [3] },
         { "name": "Chess Type Beat (slowed)", "id": "9", "numID": 9, "file": "m4a", "cat": [3], "mainArtist": ["dreamsoda"] },
-        { "name": "Waluigi Pinball", "id": "10", "numId": 10, "file": "m4a", "cat": [4], "mainArtist": ["Mario Kart DS"] },
-        { "name": "IMTTJ", "file": "", "notReady": true, "cat": ["unsupported"] },
-        { "name": "I'm always mean to the jews", "file": "", "notReady": true, "cat": ["unsupported"] },
-        { "name": "BITE ME", "id": "0", "numId": 0, "file": "mp3", "cat": [5], "featArtist": ["Zephyrianna"], "coverImg": {"url": "https://i3.ytimg.com/vi/lNoUP579nQ8/maxresdefault.jpg"} }
+        { "name": "Waluigi Pinball", "id": "10", "numId": 10, "file": "m4a", "cat": [4], "mainArtist": ["Mario Kart DS"] }
     ]
 }
