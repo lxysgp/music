@@ -1,6 +1,7 @@
 /* style.css */
 :root {
   --accent-color: #faff70;
+  --highlight-color: #3377FF;
 }
 
 
@@ -257,6 +258,8 @@ body {
   height: 1lh;
   border-radius: 50%;
   border: 1px solid var(--accent-color);
+
+  font-family: 'Courier New', Courier, monospace;
 }
 
 /* When menu button is hovered */
@@ -496,7 +499,7 @@ body {
 .track-info-play {
   font-size: 1.2em;
   border-radius: 10px;
-  background-color: #3377FF;
+  background-color: var(--highlight-color);
   margin-left: auto;
   margin-right: auto;
   display: inline-block;
@@ -568,7 +571,13 @@ select, option {
 }
 
 a { color: white; text-decoration-line: underline; font-weight: bold; }
+a:is(:has(.folder), .folder, :is(.folder > *), :is(.sidebar-links > *)) { font-weight: normal; }
 
 .announcement-bar:not(.enabled) {
   display: none;
+}
+
+.sidebar-links {
+  font-size: 0.8em;
+  padding: 5px;
 }

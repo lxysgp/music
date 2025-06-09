@@ -246,6 +246,7 @@ function loadFolder(folderID) {
 
     const menuBtn = document.createElement("div");
     menuBtn.textContent = "⋮";
+    menuBtn.textContent = "i";
     //menuBtn.textContent = "More info >";
     menuBtn.classList.add("track-menu-btn");
 
