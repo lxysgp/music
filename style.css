@@ -307,7 +307,11 @@ body {
 
 /* When track is hovered, but menu button is not */
 .track:hover > :is(.pl-remove-track-btn, .track-menu-btn):not(:hover) {
-  border: 1px solid #000000 !important;
+  border: 1px solid #000000;
+}
+
+.track-menu-btn:hover ~ .pl-remove-track-btn:not(:hover), .track-menu-btn:not(:hover):has(~ .pl-remove-track-btn:hover) {
+  border: 1px solid var(--accent-color);
 }
 
 .player-bar {

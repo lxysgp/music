@@ -205,7 +205,8 @@ function updatePlAddMenu(track) {
 }
 
 function initPlAddBtnSwap(track) {
-  document.querySelector(".track-info-pl-add-text").textContent = initPlaylistData.includes(track.id) ? "Remove from Playlist" : "Add to Playlist";
+  // document.querySelector(".track-info-pl-add-text").textContent = initPlaylistData.includes(track.id) ? "Remove from Playlist" : "Add to Playlist";
+  document.querySelector(".track-info-pl-add-text").textContent = initPlaylistData.includes(track.id) ? "Remove from My List" : "Add to My List";
   document.querySelector(".track-info-pl-add-btn").classList.toggle("remove", initPlaylistData.includes(track.id));
 }
 
@@ -386,29 +387,6 @@ function loadFolder(folderID) {
     menuBtn.textContent = "i";
     //menuBtn.textContent = "More info >";
     menuBtn.classList.add("track-menu-btn");
-
-    /* const menu = document.createElement("div");
-    menu.style.cssText = "display: none; position: absolute; background: #222; color: #fff; padding: 6px; border: 1px solid #555; border-radius: 5px; z-index: 999;";
-
-    if (folderID !== "🎿 My Playlist") {
-      menu.innerHTML = "<div class='menu-add' style='cursor:pointer;'>Add to My Playlist</div>";
-      menu.querySelector(".menu-add").onclick = () => {
-        myPlaylist.push(track);
-        alert(`✅ Added \"${track.name}\" to your playlist!`);
-        menu.style.display = "none";
-      };
-    }
-
-    menuBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      document.querySelectorAll('.menu').forEach(m => m.style.display = "none");
-      menu.style.display = "block";
-
-      const rect = menuBtn.getBoundingClientRect();
-      menu.style.position = "absolute";
-      menu.style.left = rect.left + "px";
-      menu.style.top = rect.bottom + "px";
-    }); */
 
     menuBtn.addEventListener("click", () => {prevScreen = trackView; trackInfo(track, category);});
 
@@ -606,7 +584,8 @@ document.querySelector("#new-pl-btn").addEventListener("click", () => {
 function initShowPlaylist() {
   playlistInfoGrid.innerHTML = "";
   for (let trk of initPlaylistData) {
-    jsonTrk = jsonLibrary.tracks.find(x=>x.id===trk);
+    let jsonTrk = jsonLibrary.tracks.find(x=>x.id===trk);
+    console.log(jsonTrk);
     generateTracks(playlistInfoGrid, jsonTrk, null, ()=>{
       updateInitPlaylist(jsonTrk,true);
       initShowPlaylist();
