@@ -20,19 +20,6 @@
             "defaultHidden": false,
             "logo": { "char": "🍰" }
         },
-        "Development-Only--MD": {
-            "name": "MD",
-            "defaultHidden": true,
-            "mainArtist": ["AJ [Redacted]"],
-            "logo": { "url": "" }
-        },
-        "Development-Only--DC": {
-            "name": "DC",
-            "defaultHidden": true,
-            "forcedHidden": true,
-            "mainArtist": ["G[Redacted]", "E[Redacted] A[Redacted]"],
-            "logo": { "char": "" }
-        },
         "unsupported": {
             "name": "Currently Unavailable",
             "defaultHidden": true,
